@@ -6,7 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     @vite(['resources/js/app.js'])
+
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+    <script src="https://kit.fontawesome.com/3b8f060d8f.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
 <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="50">
@@ -16,6 +19,9 @@
             <ul class="navbar-nav">
                 <li class="nav-item"><a href="#work" class="nav-link">work</a></li>
                 <li class="nav-item"><a href="#about" class="nav-link">about me</a></li>
+                @auth
+                    <li class="nav-item"><a href="{{ url('logout') }}" class="nav-link text-danger">Logout</a></li>
+                @endauth
             </ul>
         </div>
     </nav>
@@ -26,6 +32,11 @@
         <div class="container-fluid" id="header">
             <div class="container d-flex flex column section">
                 <div class="container my-auto text-white">
+                    @auth
+                        <a href="" style="">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    @endauth
                     <h1 style="font-size: 5rem;">Hi I'm Navs</h1>
                     <p style="font-size: 1.6rem;">A graduate of <b>Bachelor of science in information technology</b></p>
                 </div>
@@ -38,73 +49,33 @@
         {{-- work --}}
         <div class="container" id="work">
             <h1 class="display-4">My Work</h1>
-            <div class="card myWorks" style="width: calc(100vw / 5);" onclick="openWork()">
-                <div class="card-header">
-                    <h1 class="card-title text-center">
-                        <img src="{{ asset('Images/laravel.svg') }}" alt="" height="30px">
-                    </h1>
-                </div>
-                <div class="card-body">
-                    <p class="text-center" style="font-size: 1.5rem;">(Capstone) Surveying firm's Project Management System</p>
-                </div>
-                <button data-bs-toggle="modal" data-bs-target="#mywork" id="openWork" hidden></button>
-            </div>
-        </div>
-        <!-- work Modal -->
-        <div class="modal" id="mywork">
-            <div class="modal-dialog modal-xl modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header bg-dark">
-                        <h1 class="text-white modal-title">SProMAp</h1>
+            <div class="row">
+                <div class="card col-3 mx-1 myWorks" onclick="openWork()">
+                    <div class="card-header">
+                        <h1 class="card-title text-center">
+                            <img src="{{ asset('Images/laravel.svg') }}" alt="" height="30px">
+                        </h1>
                     </div>
-                    <div class="modal-body overflow-auto" style="height: 80vh; font-size: 1.2rem;">
-                        <h1>Description</h1>
-                        <p class="ms-4">
-                            <b>Suvery Project Management Application</b> is a project management application for Surveying Firms. <br><br>
-                            The application aims to help surveying firms in managing their projects along with the tasks and documents associated with those projects.<br><br>
-                            Users can add their clients, the projects for those clients, and the documents for the projects. certain users can also use the app to schedule
-                            task for a specific project and assign employees to work on that task.
-                        </p>
-
-                        <hr>
-
-
-                        <div class="my-4">
-                            <h1>Tech Stack</h1>
-                            <div class="d-flex justify-content-around">
-                                <div class="text-center">
-                                    <img src="{{ asset('Images/laravel.svg') }}" alt="" height="50px">
-                                    <p>Laravel 9</p>
-                                </div>
-                                <div class="text-center">
-                                    <img src="{{ asset('Images/html5.svg') }}" alt="" height="50px">
-                                    <p>HTML 5</p>
-                                </div>
-                                <div class="text-center">
-                                    <img src="{{ asset('Images/bootstrap.svg') }}" alt="" height="50px">
-                                    <p>Bootstrap 5</p>
-                                </div>
-                                <div class="text-center">
-                                    <img src="{{ asset('Images/js.svg') }}" alt="" height="50px">
-                                    <p>JavaScript</p>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <hr>
-                        <h1>Images</h1>
-                        <div class="d-flex flex-column justify-content-around">
-                            <img src="{{ asset('Images/work1.png') }}Images/work1.png" class="border mx-auto my-2" width="80%">
-                            <img src="{{ asset('Images/work2.png') }}" class="border mx-auto my-2" width="80%">
-                            <img src="{{ asset('Images/work3.png') }}" class="border mx-auto my-2" width="80%">
-                            <img src="{{ asset('Images/work4.png') }}" class="border mx-auto my-2" width="80%">
-                            <img src="{{ asset('Images/work5.png') }}" class="border mx-auto my-2" width="80%">
-                        </div>
+                    <div class="card-body">
+                        <p class="text-center" style="font-size: 1.5rem;">(Capstone) Surveying firm's Project Management System</p>
                     </div>
+                    <button data-bs-toggle="modal" data-bs-target="#mywork" id="openWork" hidden></button>
                 </div>
+
+                @auth
+                    <div class="card col-3 mx-1 myWorks" style="background-color: rgb(168, 168, 168);" onclick="openWork()">
+                        <div class="card-body d-flex">
+                            <h1 class="mx-auto my-auto"><i class="fa-solid fa-plus"></i></h1>
+                        </div>                
+                    </div>
+                @endauth
             </div>
+
+            
+
+
         </div>
+        
         <hr>
     
     
@@ -113,6 +84,11 @@
             <h1 class="display-4">About me</h1>
             <div class="card w-75 mx-auto">
                 <div class="card-body">
+                    @auth
+                        <a href="" style="float: right;">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    @endauth
                     <p class="my-2">
                         Hi, my name is John Arnulfo Navera
                         <br><br>
@@ -132,6 +108,11 @@
                     <div class="mx-1 tabBtn"><a href="#experience" data-bs-toggle="collapse" class="btn">Experience</a></div>
                 </div>
                 <div class="bg-white p-3 collapse show accordion-container" data-bs-parent="#accordion" id="skills">
+                    @auth
+                        <a href="" style="float: right;">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    @endauth
                     <div class="row">
                         <div class="col">
                             <p>
@@ -167,6 +148,11 @@
                     </div>
                 </div>
                 <div class="bg-white p-3 collapse accordion-container" data-bs-parent="#accordion" id="education">
+                    @auth
+                        <a href="" style="float: right;">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    @endauth
                     <div class="d-flex">
                         <img src="{{ asset('Images/unc.png') }}" width="50px">
                         <p class="my-auto ms-3">
@@ -176,6 +162,11 @@
                     </div>
                 </div>
                 <div class="bg-white p-3 collapse accordion-container" data-bs-parent="#accordion" id="experience">
+                    @auth
+                        <a href="" style="float: right;">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    @endauth
                     <div class="d-flex mb-3">
                         <img src="Images/unc.png" width="50px">
                         <p class="my-auto ms-3">
@@ -211,6 +202,6 @@
         </div>
     </div>
     
-
+    @include('modals.workModal')
 </body>
 </html>
