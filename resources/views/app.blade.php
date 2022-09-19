@@ -49,21 +49,25 @@
         {{-- work --}}
         <div class="container" id="work">
             <h1 class="display-4">My Work</h1>
-            <div class="row">
-                <div class="card col-3 mx-1 myWorks" onclick="openWork()">
-                    <div class="card-header">
-                        <h1 class="card-title text-center">
-                            <img src="{{ asset('Images/laravel.svg') }}" alt="" height="30px">
-                        </h1>
+            <div class="row justify-content-center">
+                @foreach ($works as $work)
+                    <div class="card col-3 m-1 clickable" style="height: 15rem" onclick="openWork('{{ $work->id }}')">
+                        <div class="card-header">
+                            <h1 class="card-title text-center">
+                                @foreach ($work->technologies as $tech)
+                                    <i class="{{ $tech->logo }}"></i>
+                                @endforeach
+                            </h1>
+                        </div>
+                        <div class="card-body d-flex">
+                            <p class="text-center mx-auto my-auto" style="font-size: 1.5rem;">{{ $work->title }}</p>
+                        </div>
+                        
                     </div>
-                    <div class="card-body">
-                        <p class="text-center" style="font-size: 1.5rem;">(Capstone) Surveying firm's Project Management System</p>
-                    </div>
-                    <button data-bs-toggle="modal" data-bs-target="#mywork" id="openWork" hidden></button>
-                </div>
+                @endforeach
 
                 @auth
-                    <div class="card col-3 mx-1 myWorks" style="background-color: rgb(168, 168, 168);" onclick="openWork()">
+                    <div class="card col-3 m-1 clickable" style="background-color: rgb(168, 168, 168); height: 15rem;" onclick="addWork()">
                         <div class="card-body d-flex">
                             <h1 class="mx-auto my-auto"><i class="fa-solid fa-plus"></i></h1>
                         </div>                
@@ -191,17 +195,18 @@
         {{-- Contacts --}}
         <div class="container d-flex pb-3 justify-content-center">
             <a href="https://www.facebook.com/janavera00/">
-                <img src="{{ asset('Images/facebook.svg') }}" class="mx-2" height="20px">
+                <i class="fa-brands fa-facebook mx-2 text-black" style="font-size: 25px"></i>
             </a>
             <a href="https://www.linkedin.com/in/john-arnulfo-navera-3ab695182/">
-                <img src="{{ asset('Images/linkedin.svg') }}" class="mx-2" height="20px">
+                <i class="fa-brands fa-linkedin mx-2 text-black" style="font-size: 25px"></i>
             </a>
             <a href="https://github.com/janavera00">
-                <img src="{{ asset('Images/github.svg') }}" class="mx-2" height="20px">
+                <i class="fa-brands fa-github mx-2 text-black" style="font-size: 25px"></i>
             </a>
         </div>
     </div>
     
     @include('modals.workModal')
+    @include('modals.addWorkModal')
 </body>
 </html>

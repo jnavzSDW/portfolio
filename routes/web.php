@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WorkController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('app');
-});
-
+Route::get('/', [UserController::class, 'home']);
 
 Route::get('/login', [UserController::class, 'index']);
 Route::post('/login/authenticate', [UserController::class, 'authenticate']);
 Route::get('/logout', [UserController::class, 'destroy']);
+
+Route::post('/addWork', [WorkController::class, 'create']);
