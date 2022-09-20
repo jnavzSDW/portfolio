@@ -32,11 +32,7 @@
         <div class="container-fluid" id="header">
             <div class="container d-flex flex column section">
                 <div class="container my-auto text-white">
-                    @auth
-                        <a href="" style="">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                    @endauth
+                    
                     <h1 style="font-size: 5rem;">Hi I'm Navs</h1>
                     <p style="font-size: 1.6rem;">A graduate of <b>Bachelor of science in information technology</b></p>
                 </div>
@@ -82,25 +78,40 @@
         
         <hr>
     
-    
+        
         {{-- about --}}
         <div class="container" id="about">
+        
             <h1 class="display-4">About me</h1>
             <div class="card w-75 mx-auto">
-                <div class="card-body">
-                    @auth
-                        <a href="" style="float: right;">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                    @endauth
-                    <p class="my-2">
-                        Hi, my name is John Arnulfo Navera
-                        <br><br>
-                        I have experience in Web Development specifically working with Laravel and Bootstrap. I also have basic knowledge different programming languages
-                        such as C++, Java, and Php as well as implementing relational database with the use of MySQL; conducting research, gathering and analyzing data,
-                        and applying IT solutions.
-                    </p>
-                </div>
+
+                <form action="{{ url('editAbout') }}" method="post">
+                    @csrf
+                    <div class="card-body" id="AboutMeSection">
+                        <div id="aboutme" class="collapse show" data-bs-parent="#AboutMeSection">
+                            @auth
+                                <a href="#aboutmeField" data-bs-toggle="collapse" style="float: right;">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                            @endauth
+                            <p class="my-2">
+                                Hi my name is {{ $profile->name }}.
+                                <br><br>
+                                {{ $profile->description }}
+                            </p>
+                        </div>
+                        <div class="collapse" id="aboutmeField" data-bs-parent="#AboutMeSection">
+                            <input type="submit" value="Update" class="btn btn-primary m-1 py-0" style="float: right">
+                            <a href="#aboutme" data-bs-toggle="collapse" class="btn btn-danger m-1 py-0" style="float: right;">
+                                Cancel
+                            </a>
+                            
+                            <textarea name="editAbout" id="editAbout" cols="30" rows="5" class="form-control">{{ $profile->description }}</textarea>
+                            
+                        </div>
+                            
+                    </div>
+                </form>
             </div>
     
             <hr>
@@ -112,43 +123,53 @@
                     <div class="mx-1 tabBtn"><a href="#experience" data-bs-toggle="collapse" class="btn">Experience</a></div>
                 </div>
                 <div class="bg-white p-3 collapse show accordion-container" data-bs-parent="#accordion" id="skills">
-                    @auth
-                        <a href="" style="float: right;">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                    @endauth
-                    <div class="row">
-                        <div class="col">
-                            <p>
-                                <b>Web Development</b><br>
-                                HTML <br>
-                                CSS <br>
-                                JavaScript<br>
-                                Laravel<br>
-                                Bootstrap<br>
-                                MySQL <br>
-                                React.js<br>
-                                <br>
-                            </p>
-                        </div>
-                        <div class="col">
-                            <p>
-                                <b>Programming</b><br>
-                                C++<br>
-                                Java<br>
-                                PHP<br>
-                                <br>
-                            </p>
-                        </div>
-                        <div class="col">
-                            <p>
-                                <b>Soft Skills</b><br>
-                                Adaptability<br>
-                                Collaboration<br>
-                                Communication<br>
-                                Problem Solving<br>
-                            </p>
-                        </div>
+                    
+                    {{-- Skills --}}
+                    <div class="row collapse show" id="skillsDisplay" data-bs-parent="#skills">
+                        @auth
+                            <a href="#skillsEdit" data-bs-toggle="collapse" class="text-end">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                        @endauth
+                        @foreach ($categories as $cat)
+                            <div class="col">
+                                <p>
+                                    <b>{{ $cat->name }}</b><br>
+                                    @foreach ($cat->skills as $skill)
+                                        {{ $skill->name }} <br>
+                                    @endforeach
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="collapse" id="skillsEdit" data-bs-parent="#skills">
+                        <form action="{{ url('updateSkills') }}" method="post">
+                            @csrf
+                            <div class="row">
+                                @foreach ($categories as $cat)
+                                <div class="col border rounded m-1 p-1">
+                                   
+                                    <div class="d-flex p-1">
+                                        <b class="">{{ $cat->name }}</b>
+                                        <div onclick="addField('skills-{{ $cat->id }}')" class="mx-2 clickable"><i class="fa-solid fa-plus text-success"></i></div>
+                                        <div onclick="removeField('skillsContainer-{{ $cat->id }}')" class="mx-2 clickable"><i class="fa-solid fa-minus text-danger"></i></div>
+                                    </div>
+                                    <hr class="my-1">
+                                    <div id="skillsContainer-{{ $cat->id }}">
+                                        <input type="text" name="skills-{{ $cat->id }}[]" id="skills-{{ $cat->id }}" class="form-control py-0 w-75 mx-auto mt-1" value="" hidden>
+                                        @foreach ($cat->skills as $skill)
+                                        <input type="text" name="skills-{{ $cat->id }}[]" id="skills-{{ $cat->id }}" class="form-control py-0 w-75 mx-auto mt-1" value="{{ $skill->name }}">
+                                        @endforeach
+                                    </div>
+                                 
+                                </div>
+                                @endforeach
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <a href="#skillsDisplay" data-bs-toggle="collapse" class="btn btn-danger py-0 mx-1">Cancel</a>
+                                <input type="submit" value="Update" class="btn btn-primary py-0 mx-1">
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="bg-white p-3 collapse accordion-container" data-bs-parent="#accordion" id="education">
@@ -187,6 +208,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
 
         <hr>
@@ -208,5 +230,6 @@
     
     @include('modals.workModal')
     @include('modals.addWorkModal')
+
 </body>
 </html>

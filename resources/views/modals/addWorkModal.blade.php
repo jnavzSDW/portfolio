@@ -61,6 +61,7 @@
     function addField(elmnt){
         const node = document.getElementById(elmnt);
         const clone = node.cloneNode(true);
+        clone.hidden = false;
         const parent = node.parentNode;
 
         parent.appendChild(clone);

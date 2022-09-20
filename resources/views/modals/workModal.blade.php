@@ -2,13 +2,8 @@
 <div class="modal" id="mywork{{ $work->id }}">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header bg-dark px-4">
+            <div class="modal-header bg-dark px-4" >
                 <h2 class="text-white modal-title" id="workTitle">{{ $work->title }}</h2>
-                @auth
-                    <a href="" style="">
-                        <i class="fa-solid fa-pen-to-square text-white"></i>
-                    </a>
-                @endauth
             </div>
             <div class="modal-body overflow-auto" style="height: 75vh">
                 <h2>Description:</h2>
@@ -50,4 +45,5 @@
     function openWork(id){
         document.querySelector(`#openWorkBtn-${id}`).click();
     }
+    
 </script>

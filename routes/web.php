@@ -20,5 +20,7 @@ Route::get('/', [UserController::class, 'home']);
 Route::get('/login', [UserController::class, 'index']);
 Route::post('/login/authenticate', [UserController::class, 'authenticate']);
 Route::get('/logout', [UserController::class, 'destroy']);
+Route::post('/editAbout', [UserController::class, 'editAboutMe']);
+Route::post('/updateSkills', [UserController::class, 'updateSkills']);
 
 Route::post('/addWork', [WorkController::class, 'create']);

@@ -39,6 +39,9 @@
     border-radius: 0px 3px 3px 3px;
 }
 
+.clickable{
+    height: fit-content;
+}
 .clickable:hover{
     cursor: pointer;
     opacity: 0.8;

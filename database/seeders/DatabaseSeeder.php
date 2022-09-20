@@ -18,6 +18,11 @@ class DatabaseSeeder extends Seeder
     {
         \App\Models\User::factory(1)->create();
         $this->call(TechonologySeeder::class);
+        $this->call(WorkSeeder::class);
+        $this->call(ScreenshotSeeder::class);
+        $this->call(ProfileSeeder::class);
+        $this->call(EducationSeeder::class);
+        $this->call(ExperienceSeeder::class);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
