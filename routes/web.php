@@ -22,5 +22,7 @@ Route::post('/login/authenticate', [UserController::class, 'authenticate']);
 Route::get('/logout', [UserController::class, 'destroy']);
 Route::post('/editAbout', [UserController::class, 'editAboutMe']);
 Route::post('/updateSkills', [UserController::class, 'updateSkills']);
+Route::post('/updateEduc', [UserController::class, 'updateEduc']);
+Route::post('/updateExperience', [UserController::class, 'updateExperience']);
 
 Route::post('/addWork', [WorkController::class, 'create']);

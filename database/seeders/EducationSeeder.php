@@ -16,7 +16,7 @@ class EducationSeeder extends Seeder
     public function run()
     {
         $ed = new Education;
-        $ed['school'] = "University of Nueva Caceres";
+        $ed['title'] = "Bachelor of Science in Information Technology";
         $ed['logo'] = "unc.png";
         $ed['date'] = "Jun 2022";
         $ed->save();

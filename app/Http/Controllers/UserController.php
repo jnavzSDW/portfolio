@@ -99,4 +99,58 @@ class UserController extends Controller
 
         return redirect(url()->previous());
     }
+
+    public function updateEduc(){
+        $request = request()->all();
+        $idCount = count($request['educId']);
+        // dd($request, $idCount);
+
+        for($i = 0;$i < $idCount;$i++){
+            $educ = Education::find($request['educId'][$i]);
+
+            $educ['title'] = $request['educTitle'][$i+1];
+            $educ['date'] = $request['educDate'][$i+1];
+            if($request['educLogo'][$i+1]){
+                $educ['logo'] = "ghost.svg";
+            }
+            $educ->save();
+        }
+
+        for($i = $idCount+1;$i < count($request['educTitle']);$i++){
+            $educ = new Education;
+            $educ['title'] = $request['educTitle'][$i];
+            $educ['date'] = $request['educDate'][$i];
+            $educ['logo'] = "ghost.svg";
+            $educ->save();
+        }
+
+        return redirect(url()->previous());
+    }
+
+    public function updateExperience(){
+        $request = request()->all();
+        $idCount = count($request['exId']);
+        // dd($request, $idCount);
+
+        for($i = 0;$i < $idCount;$i++){
+            $ex = Experience::find($request['exId'][$i]);
+
+            $ex['description'] = $request['exDescription'][$i+1];
+            $ex['date'] = $request['exDate'][$i+1];
+            if($request['exLogo'][$i+1]){
+                $ex['logo'] = "ghost.svg";
+            }
+            $ex->save();
+        }
+
+        for($i = $idCount+1;$i < count($request['exDescription']);$i++){
+            $ex = new Experience;
+            $ex['description'] = $request['exDescription'][$i];
+            $ex['date'] = $request['exDate'][$i];
+            $ex['logo'] = "ghost.svg";
+            $ex->save();
+        }
+
+        return redirect(url()->previous());
+    }
 }

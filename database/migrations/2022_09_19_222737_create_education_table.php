@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('education', function (Blueprint $table) {
             $table->id();
-            $table->string('school');
+            $table->string('title');
             $table->string('logo');
             $table->string('date');
             $table->timestamps();

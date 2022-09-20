@@ -122,9 +122,9 @@
                     <div class="mx-1 tabBtn"><a href="#education" data-bs-toggle="collapse" class="btn">Education</a></div>
                     <div class="mx-1 tabBtn"><a href="#experience" data-bs-toggle="collapse" class="btn">Experience</a></div>
                 </div>
+                {{-- Skills --}}
                 <div class="bg-white p-3 collapse show accordion-container" data-bs-parent="#accordion" id="skills">
                     
-                    {{-- Skills --}}
                     <div class="row collapse show" id="skillsDisplay" data-bs-parent="#skills">
                         @auth
                             <a href="#skillsEdit" data-bs-toggle="collapse" class="text-end">
@@ -172,39 +172,124 @@
                         </form>
                     </div>
                 </div>
+
+                {{-- Education --}}
                 <div class="bg-white p-3 collapse accordion-container" data-bs-parent="#accordion" id="education">
-                    @auth
-                        <a href="" style="float: right;">
+                    <div class="collapse show" id="educationDisplay" data-bs-parent="#education">
+                        @auth
+                        <a href="#educationEdit" data-bs-toggle="collapse" style="float: right;">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                    @endauth
-                    <div class="d-flex">
-                        <img src="{{ asset('Images/unc.png') }}" width="50px">
-                        <p class="my-auto ms-3">
-                            <b>Jun 2022</b><br>
-                            Bachelor of Science in Information Technology
-                        </p>
+                        @endauth
+                        @foreach ($educations as $educ)
+                            <div class="d-flex my-2">
+                                <img loading="lazy" src="{{ asset('Images/'.$educ->logo) }}" width="50px" height="50px">
+                                <p class="my-auto ms-3">
+                                    <b>{{ $educ->date }}</b><br>
+                                    {{ $educ->title }}
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="collapse" id="educationEdit" data-bs-parent="#education">
+                        <form action="{{ url('updateEduc') }}" method="post">
+                            @csrf
+                            <div>
+                                <div class="row form-field" id="educForm" hidden>
+                                    <div class="col-2 d-flex flex-column">
+                                        <input type="file" name="educLogo[]" id="educLogo" class="form-control my-1" accept="image/*">
+                                    </div>
+                                    <div class="col-10">
+                                        <input type="text" name="educDate[]" id="educDate" class="form-control">
+                                        <input type="text" name="educTitle[]" id="educTitle" class="form-control my-1">
+                                    </div>
+                                </div>
+                                @foreach ($educations as $educ)
+                                <div class="row form-field">
+                                    <div class="col-2 d-flex flex-column">
+                                        <img loading="lazy" class="mx-auto" src="{{ asset('Images/'.$educ->logo) }}" height="30px">
+                                        <input type="file" name="educLogo[]" id="educLogo" class="form-control my-1" accept="image/*">
+                                    </div>
+                                    <div class="col-10">
+                                        <input type="hidden" name="educId[]" value="{{ $educ->id }}">
+                                        <input type="text" name="educDate[]" id="educDate" class="form-control" value="{{ $educ->date }}">
+                                        <input type="text" name="educTitle[]" id="educTitle" class="form-control my-1" value="{{ $educ->title }}">
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+    
+                            <div class="form-field clickable" style="background-color: rgb(168, 168, 168);" onclick="addInput('educForm')">
+                                <div class="card-body d-flex">
+                                    <h1 class="mx-auto my-auto"><i class="fa-solid fa-plus"></i></h1>
+                                </div>                
+                            </div>
+                            
+                            <div class="mt-1 d-flex justify-content-end">
+                                <a href="#educationDisplay" data-bs-toggle="collapse" class="btn btn-danger py-0 mx-1">Cancel</a>
+                                <input type="submit" value="Update" class="btn btn-primary py-0 mx-1">
+                            </div>
+                        </form>
                     </div>
                 </div>
+
+                {{-- Experience --}}
                 <div class="bg-white p-3 collapse accordion-container" data-bs-parent="#accordion" id="experience">
-                    @auth
-                        <a href="" style="float: right;">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                    @endauth
-                    <div class="d-flex mb-3">
-                        <img src="Images/unc.png" width="50px">
-                        <p class="my-auto ms-3">
-                            <b>Jan 2018 - Mar 2018</b><br>
-                            SHS work immersion - web developer
-                        </p>
+                    <div class="collapse show" data-bs-parent="#experience" id="experienceDisplay">
+                        @auth
+                            <a href="#experienceEdit" data-bs-toggle="collapse" style="float: right;">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                        @endauth
+                        @foreach ($experiences as $ex)
+                            <div class="d-flex mb-3">
+                                <img loading="lazy" src="{{ asset('Images/'.$ex->logo) }}" width="50px" height="50px">
+                                <p class="my-auto ms-3">
+                                    <b>{{ $ex->date }}</b><br>
+                                    {{ $ex->description }}
+                                </p>
+                            </div>
+                        @endforeach
                     </div>
-                    <div class="d-flex mb-3">
-                        <img src="Images/Accenture.png" width="50px">
-                        <p class="my-auto ms-3">
-                            <b>Jan 2022 - Jun 2022</b><br>
-                            OJT Trainee - AWS online modules
-                        </p>
+                    <div class="collapse" data-bs-parent="#experience" id="experienceEdit">
+                        <form action="{{ url('updateExperience') }}" method="post">
+                            @csrf
+                            <div>
+                                <div class="row form-field" id="exForm" hidden>
+                                    <div class="col-2 d-flex flex-column">
+                                        <input type="file" name="exLogo[]" id="exLogo" class="form-control my-1" accept="image/*">
+                                    </div>
+                                    <div class="col-10">
+                                        <input type="text" name="exDate[]" id="exDate" class="form-control">
+                                        <input type="text" name="exDescription[]" id="exDescription" class="form-control my-1">
+                                    </div>
+                                </div>
+                                @foreach ($experiences as $ex)
+                                    <div class="row form-field">
+                                        <div class="col-2 d-flex flex-column">
+                                            <img loading="lazy" class="mx-auto" src="{{ asset('Images/'.$ex->logo) }}" height="30px">
+                                            <input type="file" name="exLogo[]" id="exLogo" class="form-control my-1" accept="image/*">
+                                        </div>
+                                        <div class="col-10">
+                                            <input type="hidden" name="exId[]" value="{{ $ex->id }}">
+                                            <input type="text" name="exDate[]" id="exDate" class="form-control" value="{{ $ex->date }}">
+                                            <input type="text" name="exDescription[]" id="exDescription" class="form-control my-1" value="{{ $ex->description }}">
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <div class="form-field clickable" style="background-color: rgb(168, 168, 168);" onclick="addInput('exForm')">
+                                <div class="card-body d-flex">
+                                    <h1 class="mx-auto my-auto"><i class="fa-solid fa-plus"></i></h1>
+                                </div>                
+                            </div>
+                            
+                            <div class="mt-1 d-flex justify-content-end">
+                                <a href="#experienceDisplay" data-bs-toggle="collapse" class="btn btn-danger py-0 mx-1">Cancel</a>
+                                <input type="submit" value="Update" class="btn btn-primary py-0 mx-1">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -231,5 +316,16 @@
     @include('modals.workModal')
     @include('modals.addWorkModal')
 
+    <script>
+        function addInput(id){
+            const template = document.querySelector(`#${id}`);
+            const clone = template.cloneNode(true);
+  
+            clone.removeAttribute('id');
+            clone.removeAttribute('hidden');
+
+            template.parentNode.appendChild(clone);
+        }
+    </script>
 </body>
 </html>

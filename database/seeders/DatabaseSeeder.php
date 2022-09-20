@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProfileSeeder::class);
         $this->call(EducationSeeder::class);
         $this->call(ExperienceSeeder::class);
+        $this->call(SkillSeeder::class);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
